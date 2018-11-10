@@ -1,5 +1,5 @@
 const {Client} = require('discord.js');
-const constants = require('util/constants.js');
+const constants = require('./util/constants.js');
 
 /**
  * Represents a bot which supports commands.
@@ -23,8 +23,9 @@ class CommandClient extends Client {
         /**
          * All registered commands
          * @type {Object.<string, CommandInfos>}
+         * @private
          */
-        this.registeredCommands = [];
+        this._registeredCommands = [];
 
         /**
          * Message displayed when usage doesn't have enough privileges to run command.
@@ -39,8 +40,8 @@ class CommandClient extends Client {
                 const commandName = args[0];
                 args.shift();
 
-                if(typeof this.registeredCommands[commandName] !== 'undefined') {
-                    const commandData = this.registeredCommands[commandName];
+                if(typeof this._registeredCommands[commandName] !== 'undefined') {
+                    const commandData = this._registeredCommands[commandName];
                     const commandOptions = commandData.options;
                     const isDm = (message.channel.type === 'dm' || message.channel.type === 'group');
 
@@ -72,20 +73,24 @@ class CommandClient extends Client {
      * Register a new command
      * @param {string} command Command without the prefix
      * @param {CommandCallback} callback Callback function called when the command is triggered
-     * @param {CommandOptions} options Options evaluated when the command is triggered
+     * @param {CommandOptions} [options={}] Options evaluated when the command is triggered
      */
-    registerCommand(command, callback, options = constants.DefaultCommandOptions) {
+    registerCommand(command, callback, options = {}) {
         /**
          * Stores the informations about the command
          * @typedef {{name: string, callback: CommandCallback, options: CommandOptions}} CommandInfos
          */
+        let o = {};
+        Object.assign(o, constants.DefaultCommandOptions);
+        Object.assign(o, options)
+
         const commandInfos = {
             name: command,
             callback: callback,
-            options: options
+            options: o,
         };
 
-        this.registeredCommands[command] = commandInfos;
+        this._registeredCommands[command] = commandInfos;
     }
 
     /**
@@ -96,11 +101,13 @@ class CommandClient extends Client {
      */
     _displayUsageMessage(message, commandInfos) {
         const options = commandInfos.options;
-        let usageMessage = options.usageMessage;
-        usageMessage.replace("%p", this.prefix);
-        usageMessage.replace("%f", this.prefix+commandInfos.name);
-        usageMessage.replace("%c", commandInfos.name);
-        this._replyMessage(message, "Usage : `" + usageMessage + "`")
+        if(options.usageMessage !== '') {
+            let usageMessage = options.usageMessage;
+            usageMessage.replace("%p", this.prefix);
+            usageMessage.replace("%f", this.prefix + commandInfos.name);
+            usageMessage.replace("%c", commandInfos.name);
+            this._replyMessage(message, "Usage : `" + usageMessage + "`")
+        }
     }
 
     /**
@@ -110,7 +117,7 @@ class CommandClient extends Client {
      * @private
      */
     _replyMessage(originalMessage, messageToReply) {
-        if(messageToReply !== '' && (message.channel.type === 'dm' || message.channel.type === 'group' || message.channel.memberPermissions(this.user).has("SEND_MESSAGES"))) {
+        if(messageToReply !== '' && (originalMessage.channel.type === 'dm' || originalMessage.channel.type === 'group' || originalMessage.channel.memberPermissions(this.user).has("SEND_MESSAGES"))) {
             originalMessage.reply(messageToReply);
         }
     }
