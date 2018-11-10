@@ -1,6 +1,6 @@
 # Discord.js Command Manager
-Discord.js Command Manager is a Node.js module, used to extend Discord.js's features, 
-and facilitate the commands registration.
+Discord.js Command Manager is a Node.js module, used to extend Discord.js features, 
+and to facilitate commands registration.
 
 # Installation
 `npm install discord-js-command-manager`
