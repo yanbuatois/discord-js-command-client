@@ -127,11 +127,35 @@ class CommandClient extends Client {
 
     /**
      * Unregisters a command if registered
-     * @param command Command to unregister
+     * @param {string} command Command to unregister
      */
     unregisterCommand(command) {
         if(typeof this._registeredCommands[command] !== 'undefined') {
             delete this._registeredCommands[command];
+        }
+    }
+
+    /**
+     * Edit command datas (callback, and options, if specified)
+     * @param {string} command The command to edit
+     * @param {CommandCallback} callback The new callback function
+     * @param {CommandOptions} [options={}] The options to edit (if an existing option isn't set, its value will be unchanged)
+     */
+    editCommandData(command,callback,options = {}) {
+        if(typeof this._registeredCommands[command] !== 'undefined') {
+            this._registeredCommands[command].callback = callback;
+            Object.assign(this._registeredCommands[command].options, options);
+        }
+    }
+
+    /**
+     * Edit command options
+     * @param {string} command The command to edit
+     * @param {CommandOptions} options The options to edit (if an existing option isn't set, its value will be unchanged)
+     */
+    editCommandOptions(command, options) {
+        if(typeof this._registeredCommands[command] !== 'undefined') {
+            Object.assign(this._registeredCommands[command].options, options);
         }
     }
 
