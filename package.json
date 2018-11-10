@@ -1,0 +1,30 @@
+{
+  "name": "discord-js-command-manager",
+  "version": "1.0.0",
+  "description": "Discord.js extension which allows to register commands simply",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dracoctix/discord-js-command-manager.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discord",
+    "command",
+    "handler",
+    "manager",
+    "event"
+  ],
+  "author": "Dracoctix",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dracoctix/discord-js-command-manager/issues"
+  },
+  "homepage": "https://github.com/dracoctix/discord-js-command-manager#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  }
+}
