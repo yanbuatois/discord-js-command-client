@@ -3,7 +3,7 @@ Discord.js Command Manager is a Node.js module, used to extend Discord.js featur
 and to facilitate commands registration.
 
 # Installation
-`npm install discord-js-command-manager`
+`npm install discord-js-command-client`
 
 # Getting started
 This module is pretty simple to use. First, you need to install it. Its use is
@@ -11,7 +11,7 @@ similar to Discord.js with the CommandClient class, replacing
 the Client class from the Discord.js module. You can pass the command's prefix as a
 parameter when creating the bot. Default prefix is `!`.
 ```javascript
-const {CommandClient} = require('discord-js-command-manager');
+const {CommandClient} = require('discord-js-command-client');
 
 const client = new CommandClient('!'); // Equivalent to
 const client = new CommandClient();
@@ -33,7 +33,7 @@ The third parameter in the `registerCommand()` method is an Object, with key-val
 You can tell which condition(s) must be followed to trigger the event. All the options
 will be detailed following. The full example for our `echo` command is :
 ```javascript
-const {CommandClient} = require('discord-js-command-manager');
+const {CommandClient} = require('discord-js-command-client');
 
 const client = new CommandClient();
 
