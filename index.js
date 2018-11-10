@@ -103,9 +103,9 @@ class CommandClient extends Client {
         const options = commandInfos.options;
         if(options.usageMessage !== '') {
             let usageMessage = options.usageMessage;
-            usageMessage.replace("%p", this.prefix);
-            usageMessage.replace("%f", this.prefix + commandInfos.name);
-            usageMessage.replace("%c", commandInfos.name);
+            usageMessage = usageMessage.replace("%p", this.prefix);
+            usageMessage = usageMessage.replace("%f", this.prefix + commandInfos.name);
+            usageMessage = usageMessage.replace("%c", commandInfos.name);
             this._replyMessage(message, "Usage : `" + usageMessage + "`")
         }
     }
