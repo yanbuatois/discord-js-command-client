@@ -21,6 +21,12 @@ class CommandClient extends Client {
         this.prefix = prefix;
 
         /**
+         * Set if the help is enabled
+         * @type {boolean}
+         */
+        this.enableHelp = true;
+
+        /**
          * All registered commands
          * @type {Object.<string, CommandInfos>}
          * @private
@@ -66,6 +72,32 @@ class CommandClient extends Client {
                     commandData.callback(message, commandName, args);
                 }
             }
+        });
+
+        this.registerCommand("help", (message) => {
+            if(this.enableHelp) {
+                const dm = (message.channel.type === 'dm' || message.channel.type === 'group');
+                if (dm || message.channel.memberPermissions(this.user).has("SEND_MESSAGES")) {
+                    let help = '';
+                    for(let key in this._registeredCommands) {
+                        if(this._registeredCommands.hasOwnProperty(key)) {
+                            let commandData = this._registeredCommands[key];
+                            if (commandData.options.displayInHelp) {
+                                if (!dm || commandData.options.dmAllowed) {
+                                    help += `\`${this.prefix}${commandData.name}\`: ${commandData.options.helpMessage}\n`;
+                                }
+                            }
+                        }
+                    }
+                    if(help !== '') {
+                        message.channel.send(help);
+                    }
+                }
+            }
+
+        }, {
+            helpMessage: "List all available commands and their usages",
+            dmAllowed: true
         })
     }
 
@@ -76,14 +108,14 @@ class CommandClient extends Client {
      * @param {CommandOptions} [options={}] Options evaluated when the command is triggered
      */
     registerCommand(command, callback, options = {}) {
+        let o = {};
+        Object.assign(o, constants.DefaultCommandOptions);
+        Object.assign(o, options);
+
         /**
          * Stores the informations about the command
          * @typedef {{name: string, callback: CommandCallback, options: CommandOptions}} CommandInfos
          */
-        let o = {};
-        Object.assign(o, constants.DefaultCommandOptions);
-        Object.assign(o, options)
-
         const commandInfos = {
             name: command,
             callback: callback,
@@ -91,6 +123,16 @@ class CommandClient extends Client {
         };
 
         this._registeredCommands[command] = commandInfos;
+    }
+
+    /**
+     * Unregisters a command if registered
+     * @param command Command to unregister
+     */
+    unregisterCommand(command) {
+        if(typeof this._registeredCommands[command] !== 'undefined') {
+            delete this._registeredCommands[command];
+        }
     }
 
     /**
@@ -106,7 +148,7 @@ class CommandClient extends Client {
             usageMessage = usageMessage.replace("%p", this.prefix);
             usageMessage = usageMessage.replace("%f", this.prefix + commandInfos.name);
             usageMessage = usageMessage.replace("%c", commandInfos.name);
-            this._replyMessage(message, "Usage : `" + usageMessage + "`")
+            this._replyMessage(message, "Usage: `" + usageMessage + "`")
         }
     }
 
