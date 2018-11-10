@@ -6,10 +6,10 @@ and to facilitate commands registration.
 `npm install discord-js-command-manager`
 
 # Getting started
-This module is pretty simple to use. You need first to install it. Then, the usage is
-same as Discord.js bot, but with the CommandClient class from this module, replacing
-the Client class from the Discord.js module. You can pass the command's prefix in
-parameter to the bot. By default, it's `!`.
+This module is pretty simple to use. First, you need to install it. Its use is
+similar to Discord.js with the CommandClient class, replacing
+the Client class from the Discord.js module. You can pass the command's prefix as a
+parameter when creating the bot. Default prefix is `!`.
 ```javascript
 const {CommandClient} = require('discord-js-command-manager');
 
