@@ -10,6 +10,8 @@ const {Client} = require('discord.js');
  * @property {UsageMessage} [usageMessage=""] Contains the message displayed when the command is badly used.
  * @property {PermissionResolvable} [requiredPermission=0] Store the permission required to use the command (Will be ignored in DM/Group DM)
  * @property {boolean} [dmAllowed=false] If false, the event isn't triggered when the command is sent by PM
+ * @property {boolean} [thisCanUse=false] If true, this bot can use this command. If botCanUse is false, this property is automatically false
+ * @property {boolean} [botCanUse=false] If true, this command can be used by a bot
  */
 const DefaultCommandOptions = {
     minArgs: 0,
@@ -19,6 +21,8 @@ const DefaultCommandOptions = {
     usageMessage: '',
     requiredPermission: 0,
     dmAllowed: false,
+    thisCanUse: false,
+    botCanUse: false,
 };
 
 
@@ -38,6 +42,7 @@ const DefaultCommandOptions = {
 /**
  * Represents a bot which supports commands.
  * @extends Client
+ * @license MIT
  */
 class CommandClient extends Client {
     /**
