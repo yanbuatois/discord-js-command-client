@@ -1,6 +1,6 @@
 {
   "name": "discord-js-command-client",
-  "version": "1.0.0-2",
+  "version": "1.0.0-3",
   "description": "Discord.js extension which allows to register commands simply",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "event"
   ],
   "author": "Dracoctix",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dracoctix/discord-js-command-client/issues"
   },
