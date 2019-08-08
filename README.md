@@ -67,7 +67,7 @@ client.editCommandData("echo", (message, commandName, args) => {
 ``` 
 
 # Documentation
-You can find complete documentation here: [https://dev.dracoctix.fr/discord-js-command-client](https://dev.dracoctix.fr/discord-js-command-client "JSDoc").
+You can find complete documentation here: [https://yanbuatois.github.io/discord-js-command-client/](https://yanbuatois.github.io/discord-js-command-client/ "JSDoc").
 There is a complete list of elements added by this modules, and different options available.
 
 # Contributing
