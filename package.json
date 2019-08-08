@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/dracoctix/discord-js-command-client#readme",
   "dependencies": {
-    "discord.js": "^11.4.2"
+    "discord.js": "^11.5.1"
   },
   "devDependencies": {
-    "jsdoc": "^3.5.5"
+    "jsdoc": "^3.6.3"
   }
 }
