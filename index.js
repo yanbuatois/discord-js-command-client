@@ -1,4 +1,4 @@
-const {Client} = require('discord.js');
+const {Client, TextChannel} = require('discord.js');
 
 /**
  * Options for a command
@@ -99,7 +99,7 @@ class CommandClient extends Client {
                         return;
                     }
 
-                    if(!isDm && commandOptions.requiredPermission !== 0 && !message.channel.memberPermissions(message.author).has(commandOptions.requiredPermission)) {
+                    if(!isDm && commandOptions.requiredPermission !== 0 && (!(message.channel instanceof TextChannel) || !message.channel.permissionsFor(message.author).has(commandOptions.requiredPermission))) {
                         this._replyMessage(message, this.commandNotAllowedMessage);
                         return;
                     }
@@ -112,7 +112,7 @@ class CommandClient extends Client {
         this.registerCommand("help", (message) => {
             if(this.enableHelp) {
                 const dm = (message.channel.type === 'dm' || message.channel.type === 'group');
-                if (dm || message.channel.memberPermissions(this.user).has("SEND_MESSAGES")) {
+                if (dm || !(message.channel instanceof TextChannel) || message.channel.permissionsFor(this.user).has("SEND_MESSAGES")) {
                     let help = '';
                     for(let key in this._registeredCommands) {
                         if(this._registeredCommands.hasOwnProperty(key)) {
@@ -218,7 +218,7 @@ class CommandClient extends Client {
      * @private
      */
     _replyMessage(originalMessage, messageToReply) {
-        if(messageToReply !== '' && (originalMessage.channel.type === 'dm' || originalMessage.channel.type === 'group' || originalMessage.channel.memberPermissions(this.user).has("SEND_MESSAGES"))) {
+        if(messageToReply !== '' && (originalMessage.channel.type === 'dm' || originalMessage.channel.type === 'group' || !(originalMessage.channel instanceof TextChannel) || originalMessage.channel.permissionsFor(this.user).has("SEND_MESSAGES"))) {
             originalMessage.reply(messageToReply);
         }
     }
