@@ -1,6 +1,6 @@
 {
   "name": "discord-js-command-client",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Discord.js extension which allows to register commands simply",
   "main": "index.js",
   "scripts": {
@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/dracoctix/discord-js-command-client#readme",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.5.0"
   },
   "devDependencies": {
-    "jsdoc": "^3.6.5"
+    "jsdoc": "^3.6.6"
   }
 }
